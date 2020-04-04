@@ -75,4 +75,29 @@ class Solution {
     }
 }
 ```
+解法二：动态规划，每根柱子的容积=Min(左最大柱，右最大柱) - height[i]
+
+```java
+public int trap(int[] height) {
+        if (height == null || height.length < 1) {
+            return 0;
+        }
+        int sum = 0, size = height.length;
+        int[] leftMax = new int[size], rightMax = new int[size];
+        leftMax[0] = height[0];
+        // 存储左边最大柱
+        for (int i = 1; i < size - 1; i++) {
+            leftMax[i] = Math.max(height[i], leftMax[i - 1]);
+        }
+        rightMax[size - 1] = height[size - 1];
+        // 存储右边最大柱
+        for (int i = size - 2; i > 0; i--) {
+            rightMax[i] = Math.max(height[i], rightMax[i + 1]);
+        }      
+        for (int i = 1; i < size-1; i++) {
+            sum += Math.min(leftMax[i], rightMax[i]) - height[i];
+        }
+        return sum;
+    }
+```
 
