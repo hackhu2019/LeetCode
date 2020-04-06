@@ -24,14 +24,11 @@ rose -> ros (删除 'e')
 ```java
 class Solution {
     public int minDistance(String word1, String word2) {
-        if (word1 == null && word2 == null) {
+        if (word1 == null || word2 == null) {
+            return word1 == null ? word2.length() : word1.length();
+        }
+        if (word1.equals(word2)) {
             return 0;
-        }
-        if (word1 == null) {
-            return word2.length();
-        }
-        if (word2 == null) {
-            return word1.length();
         }
         int len1 = word1.length(), len2 = word2.length();
         int[][] min = new int[len1 + 1][len2 + 1];
@@ -42,7 +39,7 @@ class Solution {
         for (int i = 0; i <= len2; i++) {
             min[0][i] = i;
         }
-        for (int i = 1; i <= len1; i++) { // 推导 min[i][j] 最小值
+        for (int i = 1; i <= len1; i++) {
             for (int j = 1; j <= len2; j++) {
                 if (word1.charAt(i-1) == word2.charAt(j-1)) {
                     min[i][j] = min[i - 1][j - 1];
