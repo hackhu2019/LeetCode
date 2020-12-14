@@ -21,28 +21,44 @@
 
 ```java
 public List<List<String>> groupAnagrams(String[] strs) {
-        if (strs == null) {
-            return null;
+        List<List<String>> resultList = new ArrayList<>();
+        HashMap<String, List<String>> strMap = new HashMap<>();
+    	// 相同的字符串（排序后），放在相同的 List
+        for (String str : strs) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            List<String> result = strMap.getOrDefault(key, new ArrayList<>());
+            result.add(str);
+            strMap.put(key, result);
         }
-        List<List<String>> lists = new ArrayList<>();
-        HashMap<String, List<String>> hash = new HashMap<>();
-        // 以排序后的字符串为键，原字符串为值
-        for (int i = 0; i < strs.length; i++) {
-            char[] c = strs[i].toCharArray();
-            Arrays.sort(c);
-            String key = new String(c);
-            if (hash.containsKey(key)) {
-                hash.get(key).add(strs[i]);
-            } else {
-                List<String> list = new ArrayList<>();
-                list.add(strs[i]);
-                hash.put(key, list);
+    	// entry 代替 keySet 不用查询两次 map
+        strMap.entrySet().forEach(entry -> resultList.add(entry.getValue()));
+        return resultList;
+    }
+```
+优化 key 生成 以字符出现次数为 Key （ 字母 + 出现次数 ）
+
+```java
+public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> resultList = new ArrayList<>();
+        HashMap<String, List<String>> strMap = new HashMap<>();
+        for (String str : strs) {
+            int[] alphabet = new int[26];
+            for (char c : str.toCharArray()) {
+                alphabet[c - 'a']++;
             }
+            StringBuilder key = new StringBuilder();
+            for (int i = 0; i < alphabet.length; i++) {
+                key.append('a' + i);
+                key.append(alphabet[i]);
+            }
+            List<String> result = strMap.getOrDefault(key.toString(), new ArrayList<>());
+            result.add(str);
+            strMap.put(key.toString(), result);
         }
-        for (String i : hash.keySet()) {
-            lists.add(hash.get(i));
-        }
-        return lists;
+        strMap.entrySet().forEach(entry -> resultList.add(entry.getValue()));
+        return resultList;
     }
 ```
 
