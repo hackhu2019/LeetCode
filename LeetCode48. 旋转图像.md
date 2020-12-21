@@ -49,3 +49,25 @@
     }
 ```
 
+方法二：把选择看成围绕矩阵中心点四块区域的值交换
+
+1、matrix\[row]\[col] = matrix\[len - col - 1]\[row];
+2、matrix\[len - col - 1]\[row] = matrix\[len - row - 1]\[len - col - 1];
+3、matrix\[len - row - 1]\[len - col - 1] = matrix\[col]\[len - row - 1];
+4、matrix\[col]\[len - row - 1] = matrix\[row]\[col]
+
+```java
+public void rotate(int[][] matrix) {
+        int len = matrix.length;
+        for (int row = 0; row < len / 2; row++) {
+            for (int col = 0; col < (len + 1) / 2; col++) {
+                int temp = matrix[row][col];
+                matrix[row][col] = matrix[len - col - 1][row];
+                matrix[len - col - 1][row] = matrix[len - row - 1][len - col - 1];
+                matrix[len - row - 1][len - col - 1] = matrix[col][len - row - 1];
+                matrix[col][len - row - 1] = temp;
+            }
+        }
+    }
+```
+
