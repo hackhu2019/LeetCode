@@ -41,3 +41,44 @@ public int maxProfit(int[] prices) {
     }
 ```
 
+思路优化：参考 [官方题解](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/solution/mai-mai-gu-piao-de-zui-jia-shi-ji-iii-by-wrnt/)
+
+在股票交易的第 N 天可能发生的 5 中情况：
+
+1、未发生过任何操作
+
+2、首次交易，买入当天股票
+
+3、首次交易，前一日持有股票，今天卖出
+
+4、第二次交易，今天买入股票
+
+5、第二次交易，卖出当前持有股票
+
+使用 buy1\sell1\buy2\sell2 分别代表 2、3、4、5 几种状态
+1、buy1=Max(buy1,-prices[n])
+
+2、sell1=Max(sell1,buy1+prices[n])
+
+3、buy2=Max(buy2,sell1-prices[n])
+
+4、sell2=Max(sell2,buy2+prices[n])
+
+存在 sell2>=sell1 ，所以 最终返回结果为 sell2
+
+```java
+public int maxProfit(int[] prices) {
+        int buy1 = -prices[0],
+                buy2 = -prices[0],
+                sell1 = 0,
+                sell2 = 0;
+        for (int i = 1; i < prices.length; i++) {
+            buy1 = Math.max(buy1, -prices[i]);
+            sell1 = Math.max(sell1, buy1 + prices[i]);
+            buy2 = Math.max(buy2, sell1 - prices[i]);
+            sell2 = Math.max(sell2, buy2 + prices[i]);
+        }
+        return sell2;
+    }
+```
+
