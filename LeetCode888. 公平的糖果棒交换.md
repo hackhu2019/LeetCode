@@ -10,7 +10,7 @@
 
 ```java
 public int[] fairCandySwap(int[] A, int[] B) {
-        long diff = 0;
+        int diff = 0;
         Set<Integer> set = new HashSet<>(10000);
         for (int i = 0; i < A.length; i++) {
             diff += A[i];
@@ -22,9 +22,10 @@ public int[] fairCandySwap(int[] A, int[] B) {
         int[] result = new int[2];
         diff /= 2;
         for (int a : A) {
-            if (set.contains(Math.toIntExact(a - diff))) {
+            Integer key = a - diff;
+            if (set.contains(key)) {
                 result[0] = a;
-                result[1] = Math.toIntExact(a - diff);
+                result[1] = key;
                 break;
             }
         }
