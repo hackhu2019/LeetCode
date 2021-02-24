@@ -21,6 +21,7 @@
 ***解题思路***：
 这里涉及到 C 语言中二级指针的定义，二维数组实际上就是数组的数组，所以对于动态分配内存的二维数组，需要对每个成员单独申请一次内存。
 而翻转操作，把 0 置 1，把 1 置 0，可以用异或 1（ ^1 ）来计算。 
+
 ```c
 int** flipAndInvertImage(int** A, int ARowSize, int *AColSizes, int** columnSizes, int* returnSize) {
 	int **arrys =malloc(ARowSize*sizeof(int *));// 要返回的二维数组
@@ -36,5 +37,27 @@ int** flipAndInvertImage(int** A, int ARowSize, int *AColSizes, int** columnSize
     *returnSize = ARowSize;//二维数组长度
 	return arrys;
 }
+```
+
+Java 版代码
+
+```java
+public int[][] flipAndInvertImage(int[][] A) {
+        for (int i = 0; i < A.length; i++) {
+            int left = 0, right = A.length - 1;
+            while (left < right) {
+                if (A[i][left] == A[i][right]) {
+                    A[i][left] ^= 1;
+                    A[i][right] = A[i][left];
+                }
+                left++;
+                right--;
+            }
+            if (left == right) {
+                A[i][left] ^= 1;
+            }
+        }
+        return A;
+    }
 ```
 
