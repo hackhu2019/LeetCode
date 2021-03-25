@@ -11,4 +11,4 @@
 
 ## [Thanks for free JetBrains Open Source license](https://jb.gg/OpenSource)
 
-![JetBrains Open Source license](F:\左耳听风\LeetCode\copy\LeetCode\img\jetbrains.png)
+![JetBrains Open Source license](/img/jetbrains.png)
