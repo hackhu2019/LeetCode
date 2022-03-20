@@ -80,7 +80,7 @@ public class Solution {
             }
         }
         // 链表无环
-        if (fast == null && fast.next == null) {
+        if (fast == null || fast.next == null) {
             return null;
         }
         // 慢指针从起点出发，再次与快指针相遇点为入环点
